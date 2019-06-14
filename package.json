@@ -1,0 +1,34 @@
+{
+  "name": "peershakechromeextenions",
+  "version": "1.0.0",
+  "description": "An open source peer review system for BioRxiv",
+  "scripts": {
+    "build": "browserify src/popup.js -o dist/popup.min.js",
+    "deploy": "cpx \"src/**/*.{ico,png,json,html}\" dist",
+    "prepublish": "npm run build && npm run deploy"
+  },
+  "author": "Justin Williams <jmw496@cornell.edu>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babelify": "^9.0.0",
+    "browserify": "^16.2.2",
+    "cpx": "^1.5.0"
+  },
+  "dependencies": {
+    "fairshakeinsignia": "github:MaayanLab/FAIRshakeInsignia",
+    "jquery": "^3.4.1"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  }
+}

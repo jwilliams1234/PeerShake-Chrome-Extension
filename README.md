@@ -1,8 +1,7 @@
 # PeerShake Chrome extension
 
-Get the FAIR score and submit a FAIR assessment for any biomedical digital object right from its homepage.
+An open source peer review system for BioRxiv 
 
-Prototype currently available at: https://chrome.google.com/webstore/detail/fairshake/pihohcecpiomegpagadljmdifpbkhnjn?hl=en
 
 ## Development
 

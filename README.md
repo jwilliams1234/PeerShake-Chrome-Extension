@@ -1,13 +1,18 @@
-# PeerShake-Chrome-Extension
-An open source peer review system for BioRxiv 
+# PeerShake Chrome extension
 
-# Setup 
-'''bash
+Get the FAIR score and submit a FAIR assessment for any biomedical digital object right from its homepage.
+
+Prototype currently available at: https://chrome.google.com/webstore/detail/fairshake/pihohcecpiomegpagadljmdifpbkhnjn?hl=en
+
+## Development
+
+### Setup
+```bash
 npm install
-'''
+```
 
-# Publish 
-'dist' can then be published after running: 
-'''bash 
-npm run prepublish 
-'''
+### Publish
+`dist` can then be published after running:
+```bash
+npm run prepublish
+```

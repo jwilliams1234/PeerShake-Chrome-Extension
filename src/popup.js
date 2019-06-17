@@ -43,7 +43,10 @@ var title=document.title
 var url = document.URL
 var link1 = 'https://127.0.0.1:35729/chromeExtensionBase/?title=' + encodeURIComponent(title) + "&url=" + encodeURIComponent(url);
 var link2 = 'https://127.0.0.1:35729/comment/' + encodeURIComponent(title);
-//////////////////////////
+const id = "panels-ajax-tab-container-highwire_article_tabs";
+const subID = "highwire_article_tabs";
+const genID = 'panels-ajax-tab-wrap-';
+/////////////////////////
 
 //true code
 //follow lines obtain the panels class 
@@ -54,92 +57,110 @@ var abMetList = abMetPanel.getElementsByClassName("tabs inline panels-ajax-tab")
 //creates a refrence of the definite last list item to add elements 
 //before it later 
 var refrenceNode = abMetPanel.getElementsByClassName("last")[0];
-var listAdd = document.createElement("li");
-var listAdd2 = document.createElement("li");
+var listAddSubmitReview = document.createElement("li");
+var listAddReviews = document.createElement("li");
 
 // console.log('appending');
 
 //creating generic href links  
 var a1 = document.createElement('a');
-a1.textContent = "Submit a Review";
-
-// a1.setAttribute('target', "_blank") //necessary to open link in new tab 
-
-var a2 = document.createElement('a');
-a2.textContent = "Reviews";
-// a2.setAttribute('href', link2);
-// a2.setAttribute('target', "_blank")
+a1.textContent = "Submit Review";
 
 //styles links in the syle on biorxiv 
 a1.className="panels-ajax-tab-tab panels-ajax-tabs-once-processed hw-panels-ajax-tabs-once-processed";
 a1.style = "cursor: pointer;";
+a1.setAttribute('data-panel-name','biorxiv_tab_submit');
+a1.setAttribute('data_target_id', subID);
+a1.setAttribute('href','#submit-review');
 
-// var frame = document.createElement('iframe')
-// frame.src=link1;
-// frame.setAttribute('width', '100%');
-// frame.setAttribute('height', '100%');
 
-// abMetList.appendChild(frame);
-// var newDiv = document.createElement('div');
-// newDiv.className = "blocker";
-
-// a1.appendChild(newDiv);
-// a1.appendChild(frame);
+var a2 = document.createElement('a');
+a2.textContent = "Reviews";
 
 a2.className="panels-ajax-tab-tab panels-ajax-tabs-once-processed hw-panels-ajax-tabs-once-processed";
 a2.style = "cursor: pointer;";
+a2.setAttribute('href','#reviews');
+a2.setAttribute('data-panel-name','biorxiv_tab_review');
+a2.setAttribute('data_target_id', subID);
 
-a1.setAttribute('href', '#');
-a2.setAttribute('href','##');
+
+
 
 //creates submit review iframe and adds it to tab
 var frame = document.createElement('iframe');
 frame.id = "#subRev";
 frame.style.display=null;
-frame.setAttribute('width', '0');
-frame.setAttribute('height', '0');
-frame.style.visibility="hidden";
+frame.setAttribute('width', '100%');
+frame.setAttribute('height', '1000px');
+frame.src = link1;
+
+//this event listener will: 
+//1. set list to active and remove active from current list item *check*
+//2. set style of target div to block and  set current active to none 
 a1.addEventListener("click", function(){
-    openFrame(frame,link1,'1000px')
-    closeFrame(frame2);
-    listAdd.className = "active"
-}  
+    //deals with task 2
+    var sub = document.getElementsByClassName('active')[0];
+    var end = sub.getElementsByTagName('a')[0].getAttribute('data-panel-name');
+
+    var main = document.getElementById(id);
+    var submain = main.getElementsByClassName(genID+end)[0];
+    submain.style.display = 'none';
+
+    var newBlock = main.getElementsByClassName("panels-ajax-tab-wrap-biorxiv_tab_submit")[0];
+    newBlock.style.display = 'block';
+
+    //deals with task 1
+    document.getElementsByClassName('active')[0].classList.remove('active');   
+    listAddSubmitReview.className = "active";
+} 
 );
-// a1.addEventListener("click", function(){
-//     listAdd.className = "active"
-// } 
-// );
 
 //creates review comments iframe and adds it to tab 
 var frame2 = document.createElement('iframe');
-frame2.id = "#revCom";
+frame2.id = "#rev";
 frame2.style.display=null;
-frame2.setAttribute('width', '0');
-frame2.setAttribute('height', '0');
-frame2.style.visibility="hidden";
+frame2.setAttribute('width', '100%');
+frame2.setAttribute('height', '500px');
+frame2.src = link2;
+
 a2.addEventListener("click", function(){
-    openFrame(frame2,link2, '500px');
-    closeFrame(frame);
-    listAdd2.className = "active"
+    var sub = document.getElementsByClassName('active')[0];
+    var end = sub.getElementsByTagName('a')[0].getAttribute('data-panel-name');
+
+    var main = document.getElementById(id);
+    var submain = main.getElementsByClassName(genID+end)[0];
+    submain.style.display = 'none';
+
+    var newBlock = main.getElementsByClassName("panels-ajax-tab-wrap-biorxiv_tab_review")[0];
+    newBlock.style.display = 'block';
+
+    //deals with task 1
+    document.getElementsByClassName('active')[0].classList.remove('active');   
+    listAddReviews.className = "active";
 } 
 );
-// a2.addEventListener("click", function(){
-//     listAdd2.className = "active"
-// } 
-// );
 
+var mainDIV = document.getElementById(id);
+var subDIV = document.createElement('div');
+subDIV.className="panels-ajax-tab-wrap-biorxiv_tab_submit";
+subDIV.style.display='none';
+subDIV.appendChild(frame);
+mainDIV.appendChild(subDIV);
+
+var reviewDIV = document.createElement('div');
+reviewDIV.className=genID+'biorxiv_tab_review';
+reviewDIV.appendChild(frame2);
+reviewDIV.style.display='none';
+mainDIV.appendChild(reviewDIV);
 
 // adds href links to proper list 
-listAdd.appendChild(a1);
-listAdd.appendChild(frame);
-listAdd2.appendChild(a2);
-listAdd2.appendChild(frame2);
-refrenceNode.before(listAdd2);
-refrenceNode.before(listAdd);
-// window.location.href="";
-// window.location.reload(true);
-abMetList.getElementsByClassName('first')[0].addEventListener('click',function(){
-    closeFrame(frame);
-    closeFrame(frame2);
-    abMetList.style.display='block'
-});
+listAddSubmitReview.appendChild(a1);
+listAddReviews.appendChild(a2);
+refrenceNode.before(listAddReviews);
+refrenceNode.before(listAddSubmitReview);
+
+if (window.location.hash === '#reviews') {
+    setTimeout(() => a2.click(), 250)
+} else if (window.location.hash === '#submit-review') {
+    setTimeout(() => a1.click(), 250)
+}

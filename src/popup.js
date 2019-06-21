@@ -41,8 +41,8 @@ function closeFrame(obj){
 //necessary constants 
 var title=document.title
 var url = document.URL
-var link1 = 'https://127.0.0.1:35729/chromeExtensionBase/?title=' + encodeURIComponent(title) + "&url=" + encodeURIComponent(url);
-var link2 = 'https://127.0.0.1:35729/comment/' + encodeURIComponent(title);
+var link1 = 'https://amp.pharm.mssm.edu/peershake/chromeExtensionBase/?title=' + encodeURIComponent(title) + "&url=" + encodeURIComponent(url);
+var link2 = 'https://amp.pharm.mssm.edu/peershake/comment/' + encodeURIComponent(title)+'/all';
 const id = "panels-ajax-tab-container-highwire_article_tabs";
 const subID = "highwire_article_tabs";
 const genID = 'panels-ajax-tab-wrap-';
@@ -120,7 +120,7 @@ var frame2 = document.createElement('iframe');
 frame2.id = "#rev";
 frame2.style.display=null;
 frame2.setAttribute('width', '100%');
-frame2.setAttribute('height', '500px');
+frame2.setAttribute('height', '400px');
 frame2.src = link2;
 
 a2.addEventListener("click", function(){
